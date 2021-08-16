@@ -11,7 +11,7 @@ Tech Requirements:
 
 import requests
 from time import sleep
-import sys
+from sys import argv
 
 
 class CityDataBot:
@@ -76,7 +76,7 @@ class CityDataBot:
     @staticmethod
     def main():
         """Launcher"""
-        args = sys.argv[1:]
+        args = argv[1:]
         data = ' '.join(args)
         data = data.capitalize()
         data = CityDataBot(data)
