@@ -52,7 +52,7 @@ class CityDataBot:
         try:
             response = requests.request("GET", url, headers=self.headers, params=querystring, timeout=5).json()
         except requests.RequestException:
-            return self.error()
+            return CityDataBot.error()
 
         if response['metadata']['totalCount'] == 0:
             return self.invalid_name()
