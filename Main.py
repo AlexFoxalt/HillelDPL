@@ -10,7 +10,7 @@ Tech Requirements:
     -Формат вывода только такой как в примере"""
 
 import requests
-import time
+from time import sleep
 
 
 class CityDataBot:
@@ -52,7 +52,7 @@ class CityDataBot:
 
         res = ''
         for item in response:
-            time.sleep(1.5)  # Since the api doesn't allow more than 1 request per second
+            sleep(1.5)  # Since the api doesn't allow more than 1 request per second
             if item['population'] == 0:
                 continue
             res += str('--------------\n' + self.city + '\n\n' + item['country'] + '\n' +
