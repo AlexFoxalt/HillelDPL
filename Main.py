@@ -15,6 +15,7 @@ import time
 
 class CityDataBot:
     """Class of Bot, that will show you the information about city, which name will be inputed"""
+
     def __init__(self, city):
         self.city = str(city)
 
@@ -31,7 +32,8 @@ class CityDataBot:
         except Exception:
             return '--------------\nSystem Error\n=============='
 
-        return response['data']['currencyCodes'][0]
+        res = response['data']['currencyCodes'][0]
+        return res if res else 'No info'
 
     def show_info(self):
         """Main function, does  request to the API, forming the result"""
