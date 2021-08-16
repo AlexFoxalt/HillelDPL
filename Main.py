@@ -53,6 +53,8 @@ class CityDataBot:
         res = ''
         for item in response:
             time.sleep(1.5)  # Since the api doesn't allow more than 1 request per second
+            if item['population'] == 0:
+                continue
             res += str('--------------\n' + self.city + '\n\n' + item['country'] + '\n' +
                        CityDataBot.currency(item['countryCode']) + '\n' + str(item['population']) +
                        '\n' + '==============\n')
