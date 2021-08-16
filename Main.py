@@ -77,8 +77,7 @@ class CityDataBot:
     def main():
         """Launcher"""
         args = sys.argv[1:]
-        data = ' '
-        data = data.join(args)
+        data = ' '.join(args)
         data = data.capitalize()
         data = CityDataBot(data)
         return data.show_info()
