@@ -16,9 +16,9 @@ from time import sleep
 class CityDataBot:
     """Class of Bot, that will show you the information about city, which name will be inputed"""
     headers = {
-            'x-rapidapi-key': "21c453a4d6mshf97b6774430c674p1b1149jsn804d3d516f1a",
-            'x-rapidapi-host': "wft-geo-db.p.rapidapi.com"
-        }
+        'x-rapidapi-key': "21c453a4d6mshf97b6774430c674p1b1149jsn804d3d516f1a",
+        'x-rapidapi-host': "wft-geo-db.p.rapidapi.com"
+    }
 
     def __init__(self, city):
         self.city = str(city)
@@ -49,6 +49,7 @@ class CityDataBot:
         if response['metadata']['totalCount'] == 0:
             return f'--------------\n{self.city}\n\nInvalid city name: {self.city}\n=============='
         response = response['data']
+        response = sorted(response, key=lambda x: x['population'], reverse=True)
 
         res = ''
         for item in response:
