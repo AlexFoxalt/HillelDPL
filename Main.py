@@ -15,6 +15,10 @@ import time
 
 class CityDataBot:
     """Class of Bot, that will show you the information about city, which name will be inputed"""
+    headers = {
+            'x-rapidapi-key': "21c453a4d6mshf97b6774430c674p1b1149jsn804d3d516f1a",
+            'x-rapidapi-host': "wft-geo-db.p.rapidapi.com"
+        }
 
     def __init__(self, city):
         self.city = str(city)
@@ -23,10 +27,7 @@ class CityDataBot:
     def currency(country_code: str):
         """Takes the country code from 'show_info' and return a currency of one"""
         url = "https://wft-geo-db.p.rapidapi.com/v1/geo/countries/" + country_code
-        headers = {
-            'x-rapidapi-key': "21c453a4d6mshf97b6774430c674p1b1149jsn804d3d516f1a",
-            'x-rapidapi-host': "wft-geo-db.p.rapidapi.com"
-        }
+        headers = CityDataBot.headers
         try:
             response = requests.request("GET", url, headers=headers, timeout=5).json()
         except Exception:
@@ -39,10 +40,7 @@ class CityDataBot:
         """Main function, does  request to the API, forming the result"""
         url = "https://wft-geo-db.p.rapidapi.com/v1/geo/cities"
         querystring = {"namePrefix": self.city}
-        headers = {
-            'x-rapidapi-key': "21c453a4d6mshf97b6774430c674p1b1149jsn804d3d516f1a",
-            'x-rapidapi-host': "wft-geo-db.p.rapidapi.com"
-        }
+        headers = self.headers
 
         try:
             response = requests.request("GET", url, headers=headers, params=querystring, timeout=5).json()
