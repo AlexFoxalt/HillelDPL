@@ -11,6 +11,7 @@ Tech Requirements:
 
 import requests
 from time import sleep
+import sys
 
 
 class CityDataBot:
@@ -24,6 +25,13 @@ class CityDataBot:
         self.city = str(city)
 
     @staticmethod
+    def error():
+        return '--------------\nSystem Error\n=============='
+
+    def invalid_name(self):
+        return f'--------------\n{self.city}\n\nInvalid city name: {self.city}\n=============='
+
+    @staticmethod
     def currency(country_code: str):
         """Takes the country code from 'show_info' and return a currency of one"""
         url = "https://wft-geo-db.p.rapidapi.com/v1/geo/countries/" + country_code
@@ -31,7 +39,7 @@ class CityDataBot:
         try:
             response = requests.request("GET", url, headers=CityDataBot.headers, timeout=5).json()
         except requests.RequestException:
-            return '--------------\nSystem Error\n=============='
+            return CityDataBot.error()
 
         res = response['data']['currencyCodes'][0]
         return res if res else 'No info'
@@ -44,28 +52,34 @@ class CityDataBot:
         try:
             response = requests.request("GET", url, headers=self.headers, params=querystring, timeout=5).json()
         except requests.RequestException:
-            return '--------------\nSystem Error\n=============='
+            return self.error()
 
         if response['metadata']['totalCount'] == 0:
-            return f'--------------\n{self.city}\n\nInvalid city name: {self.city}\n=============='
+            return self.invalid_name()
         response = response['data']
         response = sorted(response, key=lambda x: x['population'], reverse=True)
 
-        res = ''
+        res = []
         for item in response:
             sleep(1.5)  # Since the api doesn't allow more than 1 request per second
             if item['population'] == 0:
                 continue
-            res += str('--------------\n' + self.city + '\n\n' + item['country'] + '\n' +
-                       CityDataBot.currency(item['countryCode']) + '\n' + str(item['population']) +
-                       '\n' + '==============\n')
+            res.extend(
+                [
+                    '--------------\n', self.city, '\n\n', item['country'] + '\n',
+                    CityDataBot.currency(item['countryCode']), '\n', str(item['population']), '\n', '==============\n'
+                ]
+            )
 
-        return res
+        return ' '.join(res)
 
     @staticmethod
     def main():
         """Launcher"""
-        data = input().capitalize()
+        args = sys.argv[1:]
+        data = ' '
+        data = data.join(args)
+        data = data.capitalize()
         data = CityDataBot(data)
         return data.show_info()
 
