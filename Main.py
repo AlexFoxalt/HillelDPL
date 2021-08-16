@@ -27,9 +27,9 @@ class CityDataBot:
     def currency(country_code: str):
         """Takes the country code from 'show_info' and return a currency of one"""
         url = "https://wft-geo-db.p.rapidapi.com/v1/geo/countries/" + country_code
-        headers = CityDataBot.headers
+
         try:
-            response = requests.request("GET", url, headers=headers, timeout=5).json()
+            response = requests.request("GET", url, headers=CityDataBot.headers, timeout=5).json()
         except requests.RequestException:
             return '--------------\nSystem Error\n=============='
 
@@ -40,10 +40,9 @@ class CityDataBot:
         """Main function, does  request to the API, forming the result"""
         url = "https://wft-geo-db.p.rapidapi.com/v1/geo/cities"
         querystring = {"namePrefix": self.city}
-        headers = self.headers
 
         try:
-            response = requests.request("GET", url, headers=headers, params=querystring, timeout=5).json()
+            response = requests.request("GET", url, headers=self.headers, params=querystring, timeout=5).json()
         except requests.RequestException:
             return '--------------\nSystem Error\n=============='
 
