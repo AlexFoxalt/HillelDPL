@@ -30,7 +30,7 @@ class CityDataBot:
         headers = CityDataBot.headers
         try:
             response = requests.request("GET", url, headers=headers, timeout=5).json()
-        except Exception:
+        except requests.RequestException:
             return '--------------\nSystem Error\n=============='
 
         res = response['data']['currencyCodes'][0]
@@ -44,7 +44,7 @@ class CityDataBot:
 
         try:
             response = requests.request("GET", url, headers=headers, params=querystring, timeout=5).json()
-        except Exception:
+        except requests.RequestException:
             return '--------------\nSystem Error\n=============='
 
         if response['metadata']['totalCount'] == 0:
