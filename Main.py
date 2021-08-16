@@ -71,7 +71,7 @@ class CityDataBot:
                 ]
             )
 
-        return ' '.join(res)
+        return ''.join(res)
 
     @staticmethod
     def main():
