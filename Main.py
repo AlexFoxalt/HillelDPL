@@ -66,7 +66,7 @@ class CityDataBot:
                 continue
             res.extend(
                 [
-                    '--------------\n', self.city, '\n\n', item['country'] + '\n',
+                    '--------------\n', self.city, '\n\n', item['country'], '\n',
                     CityDataBot.currency(item['countryCode']), '\n', str(item['population']), '\n', '==============\n'
                 ]
             )
